@@ -14,6 +14,7 @@ A Node.js application that uses Ollama API to automatically generate summaries f
 - ✅ **Large Scale**: Designed to handle thousands of documents
 - ✅ **Smart Chunking**: Automatically splits large documents into manageable chunks
 - ✅ **Context Window Aware**: Respects model context limits (e.g., 131k tokens for llama3.2)
+- ✅ **Comprehensive Logging**: All operations are logged to `processing.log` with timestamps
 
 ## Prerequisites
 
@@ -146,7 +147,7 @@ batch-summaries/
 ├── summaries/      # Generated summaries (auto-created)
 ├── config.js       # Configuration settings
 ├── index.js        # Main script
-├── progress.json   # Progress tracking (auto-created)
+├── processing.log  # Detailed processing log with timestamps (auto-created)
 └── package.json
 ```
 
@@ -160,7 +161,7 @@ batch-summaries/
 6. **API Call**: Sends text/chunks to Ollama API for summarization
 7. **Final Summary**: Combines chunk summaries if chunking was used
 8. **Save**: Saves the summary with the same name as the original file but with .txt extension
-9. **Progress Logging**: Updates progress.json for tracking purposes only
+9. **Logging**: All operations are logged to `processing.log` with timestamps for debugging and monitoring
 
 ## Reprocessing Files
 
@@ -175,7 +176,22 @@ rm summaries/document1.txt
 npm start
 ```
 
-The `progress.json` file is now used only for logging and tracking purposes, not for determining what needs processing.
+## Logging
+
+The script maintains a detailed log file (`processing.log`) that records all operations with timestamps. This log file is useful for:
+
+- **Debugging**: Track down issues with specific documents
+- **Monitoring**: See processing progress and timing
+- **Audit Trail**: Keep a record of all processing activities
+- **Performance Analysis**: Monitor processing times and identify bottlenecks
+
+The log file is automatically created in the project root and contains entries like:
+```
+[2024-01-15T10:30:45.123Z] 🚀 Starting Batch Document Summarizer
+[2024-01-15T10:30:45.124Z] 📁 Docs folder: ./docs
+[2024-01-15T10:30:45.125Z] Processing: document1.pdf
+[2024-01-15T10:30:46.234Z] ✓ Completed: document1.pdf
+```
 
 ## Error Handling
 
